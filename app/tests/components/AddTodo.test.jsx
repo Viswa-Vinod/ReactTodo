@@ -13,20 +13,20 @@ describe('AddTodo', ()=> {
 	
 	it('should call onNewTodo on valid todo entered', ()=>{
 		var spy = expect.createSpy();
-		var AddTodo = TestUtils.renderIntoDocument(<AddTodo onNewTodo={spy}/>);
-		var $el = $(ReactDOM.findDOMNode(AddTodo));
+		var addTodo = TestUtils.renderIntoDocument(<AddTodo onNewTodo={spy}/>);
+		var $el = $(ReactDOM.findDOMNode(addTodo));
 
-		AddTodo.refs.todo.value = 'some todo';
+		addTodo.refs.todo.value = 'some todo';
 		TestUtils.Simulate.submit($el.find('form')[0]);
 		expect(spy).toHaveBeenCalledWith('some todo');
 	});
 
 	it('should not call onNewTodo on invalid todo entered', ()=>{
 		var spy = expect.createSpy();
-		var AddTodo = TestUtils.renderIntoDocument(<AddTodo onNewTodo={spy}/>);
-		var $el = $(ReactDOM.findDOMNode(AddTodo));
+		var addTodo = TestUtils.renderIntoDocument(<AddTodo onNewTodo={spy}/>);
+		var $el = $(ReactDOM.findDOMNode(addTodo));
 
-		AddTodo.refs.todo.value= '';
+		addTodo.refs.todo.value= '';
 		TestUtils.Simulate.submit($el.find('form')[0]);
 		expect(spy).toNotHaveBeenCalled();
 	});
