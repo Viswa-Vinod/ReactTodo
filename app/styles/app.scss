@@ -5,4 +5,5 @@
 @import "base/foundation-settings";
 @import "foundation";
 @include foundation-everything; //loads all foundation global variables
+@include foundation-grid;
 
