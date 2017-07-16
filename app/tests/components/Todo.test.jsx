@@ -10,4 +10,16 @@ describe('Todo',()=> {
 	it('should exist', () => {
 		expect('Todo').toExist();
 	});
+
+	it('should call onToggle when checkbox is checked', ()=>{
+		var spy = expect.createSpy();
+		var todoData = {id:199, text: 'sample todo', completed: false}
+		var todo = TestUtils.renderIntoDocument(
+			<Todo {...todoData} onToggle={spy}/>);
+		var $el = $(ReactDOM.findDOMNode(todo));
+		
+		TestUtils.Simulate.click($el[0]);
+		
+		expect(spy).toHaveBeenCalledWith(199);
+	})
 });
