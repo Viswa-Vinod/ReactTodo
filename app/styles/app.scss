@@ -7,3 +7,8 @@
 @include foundation-everything; //loads all foundation global variables
 @include foundation-grid;
 
+//components
+@import "components/container";
+@import "components/page-title";
+@import "components/todo";
+
