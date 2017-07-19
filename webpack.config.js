@@ -35,7 +35,8 @@ module.exports = {
 		modulesDirectories: ['node_modules', './app/components','./app/api'], //with this line there wil be no need to create aliases for every component created 
 		alias: {
 			
-			applicationStyles: 'app/styles/app.scss'
+			applicationStyles: 'app/styles/app.scss',
+			actions: 'app/actions/actions.jsx'
 		},
 		extensions: ['','.js','.jsx'] // you can now require('file') instead of require('file.js')
 	},
