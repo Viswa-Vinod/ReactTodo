@@ -6,20 +6,21 @@ import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
 import TodoSearch from 'TodoSearch';
 
-var TodoAPI = require('TodoAPI');
+//var TodoAPI = require('TodoAPI'); --> not required with redux
 
 var TodoApp = React.createClass({
-
-	getInitialState: function () {
-		return {
-			showCompleted: false,
-			searchText: '',
-			todos: TodoAPI.getTodos()
-		};
-	},
-	componentDidUpdate: function () {
-		TodoAPI.setTodos(this.state.todos);
-	},
+	//getInitialState is not required with redux
+	// getInitialState: function () {
+	// 	return {
+	// 		showCompleted: false,
+	// 		searchText: '',
+	// 		todos: TodoAPI.getTodos()
+	// 	};
+	// },
+	//componentDisUpdate is not required with redux
+	// componentDidUpdate: function () {
+	// 	TodoAPI.setTodos(this.state.todos);
+	// },
 
 	//handleToggle no longer required after react-redux added
 	// handleToggle: function (id) {
@@ -33,38 +34,44 @@ var TodoApp = React.createClass({
 
 	// 	this.setState({todos: updatedTodos});
 	// },
-	handleTodo: function (text) {
-		
-		this.setState({
-					todos: [...this.state.todos, 
-							{
-							  id:uuid(), 
-							  text:text, 
-							  completed: false,
-							  createdAt: moment().unix(),
-							  completedAt: undefined
-							}
-						   ]
-		});
-		//console.log('new todo: '+ text)
 
-	},
-	handleSearch: function (showCompleted, searchText) {
-		this.setState({
-			showCompleted: showCompleted,
-			searchText: searchText.toLowerCase()
-		});
-	},
+	//handleTodo is not required with redux
+	// handleTodo: function (text) {
+		
+	// 	this.setState({
+	// 				todos: [...this.state.todos, 
+	// 						{
+	// 						  id:uuid(), 
+	// 						  text:text, 
+	// 						  completed: false,
+	// 						  createdAt: moment().unix(),
+	// 						  completedAt: undefined
+	// 						}
+	// 					   ]
+	// 	});
+	// 	//console.log('new todo: '+ text)
+
+	// },
+
+	//handleSearch is not required with Redux
+	// handleSearch: function (showCompleted, searchText) {
+	// 	this.setState({
+	// 		showCompleted: showCompleted,
+	// 		searchText: searchText.toLowerCase()
+	// 	});
+	// },
 	render: function() {
-		var {todos, showCompleted, searchText} = this.state;
-		var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
+
+		//these vars are not required with redux
+		// var {todos, showCompleted, searchText} = this.state;
+		// var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 		return (
 			<div> 
 				<h1 className = 'page-title'>Todo App</h1>
 				<div className = 'row'>
 					<div className = 'column small-centered small-11 medium-6 large-5'>
 						<div className = 'container'>
-							<TodoSearch onSearch={this.handleSearch}/>
+							<TodoSearch/>
 							<TodoList/> 
 							<AddTodo/>
 						</div>
