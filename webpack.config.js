@@ -34,7 +34,7 @@ module.exports = {
 		root: __dirname,
 		modulesDirectories: ['node_modules', './app/components','./app/api'], //with this line there wil be no need to create aliases for every component created 
 		alias: {
-			
+			app: 'app', //with this, you can refer to any of the modules inside the app using paths relative to app folder without having to add an alias for each of them
 			applicationStyles: 'app/styles/app.scss',
 			actions: 'app/actions/actions.jsx',
 			reducers: 'app/reducers/reducers.jsx',

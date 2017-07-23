@@ -3,7 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var TestUtils = require('react-addons-test-utils');
 var $ = require('jQuery');
-
+import * as actions from 'actions';
 var {AddTodo} = require('AddTodo'); //gets unconnected AddTodo component
 
 describe('AddTodo', ()=> {
@@ -11,12 +11,9 @@ describe('AddTodo', ()=> {
 		expect(AddTodo).toExist();
 	});
 	
-	it('should dispatch ADD_TODO when valid todo entered', ()=>{
+	it('should dispatch startAddTodo when valid todo entered', ()=>{
 		var spy = expect.createSpy();
-		var action = {
-			type: 'ADD_TODO',
-			text: 'some todo'
-		}
+		var action = actions.startAddTodo('do sth');
 		var addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy}/>);
 		var $el = $(ReactDOM.findDOMNode(addTodo));
 
