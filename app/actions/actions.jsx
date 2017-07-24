@@ -42,11 +42,40 @@ export var startAddTodo = (text) => {
 	};
 }
 export var addTodos = (todos) => {
+	//console.log(todos);
 	return {
 		type: 'ADD_TODOS',
 		todos
 	}
 }
+
+export var startAddTodos = () => {
+	return (dispatch, getState) => {
+
+		var todosRef = firebaseRef.child('todos').once('value');
+		return todosRef.then(
+			(snapshot) => {
+				
+				var todos = snapshot.val() || {};
+				var arrTodos = [];
+				for (var todoID in todos) {
+					
+					arrTodos = [...arrTodos, {
+							id: todoID,
+							...todos[todoID]
+							
+						}];
+				}
+				
+				dispatch(addTodos(arrTodos));						
+		
+			}, (e)=> {
+				console.log('Unable to fetch todos from firebase: ', e)
+			}
+			);
+		
+	};
+};
 
 export var toggleShowCompleted = () => {
 

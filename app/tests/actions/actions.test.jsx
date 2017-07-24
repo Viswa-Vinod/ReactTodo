@@ -89,18 +89,34 @@ describe('Actions', ()=>{
 
 		beforeEach((done)=>{
 			//this lifecycle method will be called before each test to create test todo on firebase
-			testTodoRef = firebaseRef.child('todos').push();
-			testTodoRef.set({
-				text: 'sth',
-				completed: false,
-				createdAt: 234234
-			}).then(() => done());
-			
+			var todosRef = firebaseRef.child('todos');
+			todosRef.remove().then(()=>{
+				testTodoRef = firebaseRef.child('todos').push();
+					return testTodoRef.set({
+					text: 'sth',
+					completed: false,
+					createdAt: 234234
+				});
+			}).then(() => done())
+			.catch(done); 
 		});
 
 		afterEach((done)=>{
 			//this lifecycle method will be called after each test to delete any test todos created on firebase by the test block
 			testTodoRef.remove().then(()=>done());
+		});
+
+		it('should populate todos and dispatch ADD_TODOS action', (done)=>{
+			const store = createMockStore({});
+			const action = actions.startAddTodos();
+			store.dispatch(action).then(()=>{
+				const mockActions = store.getActions();
+				expect(mockActions[0].type).toEqual('ADD_TODOS');
+				expect(mockActions[0].todos.length).toEqual(1);
+				expect(mockActions[0].todos[0].text).toEqual('sth');
+				done();
+
+			}, done);
 		});
 
 		it('should toggle todo and dispatch UPDATE_TODO action', (done)=>{

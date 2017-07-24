@@ -11,17 +11,18 @@ var store = require('configureStore').configure();
 var TodoAPI = require('TodoAPI');
 
 
+//no longer required after app is connected to firebase
+// store.subscribe(()=>{
+// 	var state = store.getState();
+// 	console.log('New state: ', store.getState());
+// 	TodoAPI.setTodos(state.todos);
+// });
 
-store.subscribe(()=>{
-	var state = store.getState();
-	console.log('New state: ', store.getState());
-	TodoAPI.setTodos(state.todos);
-});
+//no longer required after app is connected to firebase
+// var initialTodos = TodoAPI.getTodos();
+// store.dispatch(actions.addTodos(initialTodos));
 
-var initialTodos = TodoAPI.getTodos();
-store.dispatch(actions.addTodos(initialTodos));
-
-
+store.dispatch(actions.startAddTodos());
 
 //Load foundation
 //the style and css loader are both required to get this to work.
