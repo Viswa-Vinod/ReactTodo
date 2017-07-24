@@ -14,7 +14,7 @@ module.exports = function(config){
 		reporters: ['mocha'],  //shows check marks or cross marks indicating test results
 		client: {
 			mocha: {
-				timeout: '10000' //if testing is not over within 5s then terminate testing
+				timeout: '5000' //if testing is not over within 5s then terminate testing
 			}
 		},
 		webpack: webpackConfig,

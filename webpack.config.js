@@ -1,5 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');//path is a core node module
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+//this env var will be set by the production env, whether it be heroku or something else
+
 module.exports = {
 
 	entry: [//order of scripts loading is important. 
@@ -22,6 +26,11 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			'$': 'jquery',
 			'jQuery': 'jquery'
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			compressor: {
+				warnings: false
+			}
 		})
 
 	],
@@ -60,5 +69,5 @@ module.exports = {
 			path.resolve(__dirname, './node_modules/foundation-sites/scss')
 		]
 	},
-	devtool: 'cheap-module-eval-source-map'
+	devtool: process.env.NODE_ENV === 'production'? undefined: 'cheap-module-eval-source-map'
 }
