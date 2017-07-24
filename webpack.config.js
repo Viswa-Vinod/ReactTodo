@@ -1,8 +1,17 @@
 var webpack = require('webpack');
-var path = require('path');//path is a core node module
+var path = require('path');//path is a core node module; The path module contains several helper functions to help make path manipulation easier.
+var envFile = require('node-env-file'); //node-env-file lib is used to define env variables; see files config/test.env and config/development.env
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 //this env var will be set by the production env, whether it be heroku or something else
+
+try {
+	
+	//add all the defined env variables in the .env file onto process.env
+	envFile(path.join(__dirname, 'config/' + process.env.NODE_ENV + '.env'));
+} catch (e) {
+
+}
 
 module.exports = {
 
@@ -27,9 +36,18 @@ module.exports = {
 			'$': 'jquery',
 			'jQuery': 'jquery'
 		}),
-		new webpack.optimize.UglifyJsPlugin({
+		new webpack.optimize.UglifyJsPlugin({ //this plugin suppresses warning messages when webpack is run with -p
 			compressor: {
 				warnings: false
+			}
+		}),
+		new webpack.DefinePlugin({ //plugin adds the variables in .env files into bundle.js
+			'process.env': {
+				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+				API_KEY: JSON.stringify(process.env.API_KEY),
+				AUTH_DOMAIN: JSON.stringify(process.env.AUTH_DOMAIN),
+				DATABASE_URL: JSON.stringify(process.env.DATABASE_URL),
+				STORAGE_BUCKET: JSON.stringify(process.env.STORAGE_BUCKET)
 			}
 		})
 
