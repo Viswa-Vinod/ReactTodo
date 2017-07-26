@@ -38,7 +38,8 @@ export var todosReducer = (state=[], action) => {
 
 					else return todo;
 					 
-				})
+				});
+		case 'LOGOUT': return []; //todos data in state must get wiped out upon logout
 		default: 
 			return state;
 	}

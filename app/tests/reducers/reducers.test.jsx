@@ -79,6 +79,14 @@ describe('Reducers', ()=>{
 			expect(res.length).toEqual(2);
 			expect(res[0].id).toEqual(action.todos[0].id);
 		});
+
+		it('should wipe out existing todos upon logout', ()=>{
+			var action = {type: 'LOGOUT'};
+			var todos = [{id: 1, text: 'task1', completed: false, completedAt: undefined, createdAt: 300},
+				{id: 2, text: 'task2', completed: false, completedAt: undefined, createdAt: 50}] ;
+			var res = reducers.todosReducer(df(todos),df(action));
+			expect(res.length).toEqual(0);
+		});
 	});
 
 	describe('Auth Reducer', ()=>{
