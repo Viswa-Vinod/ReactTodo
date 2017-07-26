@@ -16,9 +16,13 @@ import router from 'app/router/';
 //the onAuthStateChanged is called everytime someone logs in or logs out. When someone logs in
 //the user argument is present and when someone logs out the user argument is absent. 
 firebase.auth().onAuthStateChanged((user)=>{
+
 	if(user) {
+		//console.log('user is:', user.uid);
+		store.dispatch(actions.login(user.uid)); //store user info in state
 		hashHistory.push('/todos'); //programmatic navigation
 	} else {
+		store.dispatch(actions.logout()); //clear user info from state
 		hashHistory.push('/');
 	}
 });
