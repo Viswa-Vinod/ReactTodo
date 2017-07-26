@@ -8,7 +8,8 @@ var {Provider} = require('react-redux');
 var configureStore = require('configureStore');
 
 import TodoList from 'TodoList';
-var TodoApp = require('TodoApp');
+//var TodoApp = require('TodoApp');
+import {TodoApp} from 'TodoApp'; //import unconnected version of component, not redux-connected version
 
 describe('TodoApp',()=> {
 	it('should exist', () => {
