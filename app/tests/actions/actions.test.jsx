@@ -34,21 +34,7 @@ describe('Actions', ()=>{
 		expect(res).toEqual(action);
 	});
 
-	it('should create todo and dispatch ADD_TODO', (done)=>{//done is a function. If it is called with arguments then that implies there has been as error
-		const store = createMockStore({}); //create mock store with no data
-		const todoText = 'My todo item';
-
-		store.dispatch(actions.startAddTodo(todoText)).then(()=>{
-			const actions = store.getActions();//returns an array of all the actions that were fired on the mock store
-			expect(actions[0]).toInclude({ //toInclude means that at the very least the type key has to be there 
-				type: 'ADD_TODO'
-			}); 
-			expect(actions[0].todo).toInclude({
-				text: todoText
-			});
-			done(); //if this line is not included the test will never finish and there will be a timeout error
-		}).catch(done); //if there is an error writing to firebase done will be called with the error object as argument
-	});
+	
 
 	it('should generate addTodos action', ()=>{
 		var action = {
@@ -86,13 +72,18 @@ describe('Actions', ()=>{
 
 	describe('Tests with firebase todos', ()=>{
 		var testTodoRef;
+		var uid;
+		var todosRef;
 
 		beforeEach((done)=>{
 			//this lifecycle method will be called before each test to create test todo on firebase
-			var todosRef = firebaseRef.child('todos');
-			todosRef.remove().then(()=>{
-				testTodoRef = firebaseRef.child('todos').push();
-					return testTodoRef.set({
+			firebase.auth().signInAnonymously().then((user)=>{
+				uid = user.uid;
+				todosRef = firebaseRef.child(`users/${uid}/todos`);
+				return todosRef.remove();
+			}).then(()=>{
+				testTodoRef = todosRef.push();
+				return testTodoRef.set({
 					text: 'sth',
 					completed: false,
 					createdAt: 234234
@@ -103,11 +94,11 @@ describe('Actions', ()=>{
 
 		afterEach((done)=>{
 			//this lifecycle method will be called after each test to delete any test todos created on firebase by the test block
-			testTodoRef.remove().then(()=>done());
+			todosRef.remove().then(()=>done());
 		});
 
 		it('should populate todos and dispatch ADD_TODOS action', (done)=>{
-			const store = createMockStore({});
+			const store = createMockStore({auth:{uid}}); //es6 syntax for auth: {uid: uid}
 			const action = actions.startAddTodos();
 			store.dispatch(action).then(()=>{
 				const mockActions = store.getActions();
@@ -119,8 +110,24 @@ describe('Actions', ()=>{
 			}, done);
 		});
 
+		it('should create todo and dispatch ADD_TODO', (done)=>{//done is a function. If it is called with arguments then that implies there has been as error
+			const store = createMockStore({auth:{uid}}); //create mock store with uid of logged in user
+			const todoText = 'My todo item';
+
+			store.dispatch(actions.startAddTodo(todoText)).then(()=>{
+				const actions = store.getActions();//returns an array of all the actions that were fired on the mock store
+				expect(actions[0]).toInclude({ //toInclude means that at the very least the type key has to be there 
+					type: 'ADD_TODO'
+				}); 
+				expect(actions[0].todo).toInclude({
+					text: todoText
+				});
+				done(); //if this line is not included the test will never finish and there will be a timeout error
+			}).catch(done); //if there is an error writing to firebase done will be called with the error object as argument
+		});
+
 		it('should toggle todo and dispatch UPDATE_TODO action', (done)=>{
-			const store = createMockStore({});
+			const store = createMockStore({auth:{uid}});
 			const action = actions.startToggleTodo(testTodoRef.key, true);
 			store.dispatch(action).then(()=>{
 				const mockActions = store.getActions();
