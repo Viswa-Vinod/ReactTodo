@@ -2,15 +2,26 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var {Provider} = require('react-redux');
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+var {hashHistory} = require('react-router');
 
 //var TodoApp = require('TodoApp');
-import TodoApp from 'TodoApp';
+
 
 var actions = require('actions');
 var store = require('configureStore').configure();
-var TodoAPI = require('TodoAPI');
-import Login from 'Login';
+
+import firebase from 'app/firebase/';
+import router from 'app/router/';
+
+//the onAuthStateChanged is called everytime someone logs in or logs out. When someone logs in
+//the user argument is present and when someone logs out the user argument is absent. 
+firebase.auth().onAuthStateChanged((user)=>{
+	if(user) {
+		hashHistory.push('/todos'); //programmatic navigation
+	} else {
+		hashHistory.push('/');
+	}
+});
 
 //no longer required after app is connected to firebase
 // store.subscribe(()=>{
@@ -45,16 +56,15 @@ store.dispatch(actions.startAddTodos());
 //app css; applicationStyles is an alias. Check webpack.config.js.
 require('style!css!sass!applicationStyles');
 
+
 $(document).foundation();
+
+//route auth guard for /todos
+
 
 ReactDOM.render(
 			<Provider store={store}>
-				<Router history = {hashHistory}>
-					<Route path = '/'> 
-						<Route path = 'todos' component = {TodoApp}></Route>
-						<IndexRoute component = {Login}/>
-					</Route>
-				</Router>
+				{router}
 			</Provider>,
 			document.getElementById('app')
 );
