@@ -57,5 +57,4 @@ export var authReducer = (state={}, action) => {
 		default: 
 			return state;
 	}
-
 }

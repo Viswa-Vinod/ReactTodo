@@ -20,6 +20,7 @@ firebase.auth().onAuthStateChanged((user)=>{
 	if(user) {
 		//console.log('user is:', user.uid);
 		store.dispatch(actions.login(user.uid)); //store user info in state
+		store.dispatch(actions.startAddTodos());
 		hashHistory.push('/todos'); //programmatic navigation
 	} else {
 		store.dispatch(actions.logout()); //clear user info from state
@@ -38,7 +39,7 @@ firebase.auth().onAuthStateChanged((user)=>{
 // var initialTodos = TodoAPI.getTodos();
 // store.dispatch(actions.addTodos(initialTodos));
 
-store.dispatch(actions.startAddTodos());
+
 
 //Load foundation
 //the style and css loader are both required to get this to work.

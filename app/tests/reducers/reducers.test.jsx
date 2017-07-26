@@ -95,11 +95,13 @@ describe('Reducers', ()=>{
 		});
 
 		it('should clear auth on logout', ()=>{
+			const authData = {uid: 'sdfsdf'};
+
 			const action = {
 				type: 'LOGOUT'				
 			}
 			
-			const res = reducers.authReducer(undefined, df(action));
+			const res = reducers.authReducer(df(authData), df(action));
 
 			expect(res).toEqual({});
 
