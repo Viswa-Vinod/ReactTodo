@@ -13,7 +13,8 @@ import * as actions from 'actions';
 
 //var TodoAPI = require('TodoAPI'); --> not required with redux
 
-export var TodoApp = React.createClass({
+//export var TodoApp = React.createClass({
+export class TodoApp extends React.Component {
 	//getInitialState is not required with redux
 	// getInitialState: function () {
 	// 	return {
@@ -71,8 +72,8 @@ export var TodoApp = React.createClass({
 		e.preventDefault();
 		dispatch(actions.startLogout());
 
-	},
-	render: function() {
+	}
+	render() {
 
 		//these vars are not required with redux
 		// var {todos, showCompleted, searchText} = this.state;
@@ -81,7 +82,7 @@ export var TodoApp = React.createClass({
 		return (
 			<div> 
 				<div className='page-actions'>
-					<a href='#' onClick = {this.onLogout}>Logout</a>
+					<a href='#' onClick = {this.onLogout.bind(this)}>Logout</a>
 				</div>
 				<h1 className = 'page-title'>Todo App</h1>
 				<div className = 'row'>
@@ -96,7 +97,7 @@ export var TodoApp = React.createClass({
 			</div>
 		)
 	}
-});
+};
 
 //module.exports = TodoApp;
 export default Redux.connect()(TodoApp);

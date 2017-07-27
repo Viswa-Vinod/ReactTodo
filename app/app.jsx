@@ -1,18 +1,16 @@
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-var {Provider} = require('react-redux');
-var {hashHistory} = require('react-router');
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import {hashHistory} from 'react-router';
+import * as actions from 'actions';
 //var TodoApp = require('TodoApp');
-
-
-var actions = require('actions');
-var store = require('configureStore').configure();
+import {configure} from 'configureStore';
+//var store = require('configureStore').configure();
 
 import firebase from 'app/firebase/';
 import router from 'app/router/';
 
+var store = configure();
 //the onAuthStateChanged is called everytime someone logs in or logs out. When someone logs in
 //the user argument is present and when someone logs out the user argument is absent. 
 firebase.auth().onAuthStateChanged((user)=>{

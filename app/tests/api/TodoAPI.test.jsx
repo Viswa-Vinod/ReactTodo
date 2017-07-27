@@ -42,7 +42,7 @@ describe('TodoAPI', ()=> {
 	// });
 
 	describe('filter todos', ()=>{
-		var todos = [{id: 1, completed: true, text: 'some text1'},
+		var todos = [{id: 1, completed: true, text: 'Some text1'},
 					{id: 2, completed: false, text: 'some text2'},
 					{id: 3, completed: true, text: 'some text3'}];
 
@@ -61,7 +61,7 @@ describe('TodoAPI', ()=> {
 	});
 
 	describe('search todos', ()=>{
-		var todos = [{id: 1, completed: true, text: 'some text1'},
+		var todos = [{id: 1, completed: true, text: 'Some text1'},
 					{id: 2, completed: false, text: 'other text2'},
 					{id: 3, completed: true, text: 'some text3'}];
 
@@ -70,9 +70,14 @@ describe('TodoAPI', ()=> {
 			var filteredTodos = TodoAPI.filterTodos(todos, true, '')
 			expect(filteredTodos.length).toBe(3);
 		});
-		it ('should show searched for todos when search text is non-empty', ()=>{
+		it ('should filter todos by searchText', ()=>{
 			
 			var filteredTodos = TodoAPI.filterTodos(todos, true, 'some')
+			expect(filteredTodos.length).toBe(2);
+		});
+		it ('should filter todos by searchText if upper case', ()=>{
+			
+			var filteredTodos = TodoAPI.filterTodos(todos, true, 'Some')
 			expect(filteredTodos.length).toBe(2);
 		});
 	});

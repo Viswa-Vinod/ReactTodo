@@ -1,8 +1,11 @@
-var React = require('react');
-var {connect} = require('react-redux');
-var actions = require('actions');
 
-export var TodoSearch = React.createClass({
+import React from 'react';
+import {connect} from 'react-redux';
+import * as actions from 'actions';
+
+
+//export var TodoSearch = React.createClass({
+export class TodoSearch extends React.Component {
 	//handleSearch is no longer required with redux in place
 	// handleSearch : function() {
 	// 	var showCompleted = this.refs.showCompleted.checked;
@@ -11,7 +14,7 @@ export var TodoSearch = React.createClass({
 	// 	this.props.onSearch(showCompleted, searchText);
 	// },
 	
-	render: function () {
+	render () {
 		var {dispatch, showCompleted, searchText} = this.props;
 		return (
 			<div className = "container__header">
@@ -36,7 +39,7 @@ export var TodoSearch = React.createClass({
 			</div>
 		);
 	}
-});
+};
 
 export default connect(
 	(state) => {
@@ -47,4 +50,4 @@ export default connect(
 		}
 	}
 
-	)(TodoSearch);
+)(TodoSearch);

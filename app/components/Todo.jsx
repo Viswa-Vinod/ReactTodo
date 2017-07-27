@@ -1,12 +1,12 @@
-var React = require('react');
-var moment  = require('moment');
-var {connect} = require('react-redux');
-var actions = require('actions');
+
+import React from 'react';
+import moment from 'moment';
+import {connect} from 'react-redux';
+import * as actions from 'actions';
 
 //the Todo component is being exported because it will be used in a test file
-export var Todo = React.createClass({
-
-	render: function () {
+export class Todo extends React.Component {
+	render () {
 		var {id, text, completed, createdAt, completedAt, dispatch} = this.props;
 		var todoClassName = completed? 'todo todo-completed': 'todo';
 		var renderDate =  ()=>{
@@ -22,7 +22,8 @@ export var Todo = React.createClass({
 		return (
 			<div onClick={()=>{
 				//this.props.onToggle(id);	
-				dispatch(actions.startToggleTodo(id, !completed))
+
+				dispatch(actions.startToggleTodo(id, !completed));
 			}} className = {todoClassName}>
 				<div>
 					<input type="checkbox" checked={completed}/>
@@ -35,6 +36,6 @@ export var Todo = React.createClass({
 			</div>
 		);
 	}
-});
+};
 
 export default connect()(Todo);
